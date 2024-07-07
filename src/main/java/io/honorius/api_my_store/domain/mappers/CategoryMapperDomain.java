@@ -9,16 +9,16 @@ public class CategoryMapperDomain {
     public CategoryDomain fromDataToDomain(Category category){
         return new CategoryDomain(
                 category.getCategoryId(),
-                category.getCategoryName(),
-                category.getCategoryDescription()
+                category.getCategoryName().toUpperCase(),
+                category.getCategoryDescription().toUpperCase()
         );
     }
 
     public Category fromDomainToData(CategoryDomain categoryDomain){
         return new Category(
                 categoryDomain.getCategoryId(),
-                categoryDomain.getCategoryName(),
-                categoryDomain.getCategoryDescription()
+                categoryDomain.getCategoryName().toUpperCase(),
+                categoryDomain.getCategoryDescription().toUpperCase()
         );
     }
 }
