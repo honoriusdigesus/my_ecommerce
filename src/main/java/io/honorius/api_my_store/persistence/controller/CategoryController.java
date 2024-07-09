@@ -1,9 +1,6 @@
 package io.honorius.api_my_store.persistence.controller;
 
-import io.honorius.api_my_store.domain.caseuse.CreateCategoryCaseUse;
-import io.honorius.api_my_store.domain.caseuse.GetAllCategoryCaseUse;
-import io.honorius.api_my_store.domain.caseuse.GetCategoryByIdCaseUse;
-import io.honorius.api_my_store.domain.caseuse.UpdateCategoryCaseUse;
+import io.honorius.api_my_store.domain.caseuse.*;
 import io.honorius.api_my_store.persistence.mappers.CategoryMapperPersistence;
 import io.honorius.api_my_store.persistence.model.CategoryPersistence;
 import lombok.AllArgsConstructor;
@@ -21,6 +18,7 @@ public class CategoryController {
     private final GetCategoryByIdCaseUse getCategoryByIdCaseUse;
     private final CreateCategoryCaseUse createCategoryCaseUse;
     private final UpdateCategoryCaseUse updateCategoryCaseUse;
+    private final DeleteCategoryCaseUse deleteCategoryCaseUse;
 
     private final CategoryMapperPersistence categoryMapperPersistence;
 
@@ -35,7 +33,7 @@ public class CategoryController {
 
     //Get category by ID
     @GetMapping("/get/{id}")
-    public ResponseEntity<CategoryPersistence> getCategoryById(@PathVariable Long id){
+    public ResponseEntity<CategoryPersistence> getCategoryById(@PathVariable(required = false) Long id){
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(categoryMapperPersistence.fromDomainToPersistence(getCategoryByIdCaseUse.getCategoryById(id)));
@@ -56,5 +54,11 @@ public class CategoryController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(categoryMapperPersistence.fromDomainToPersistence(updateCategoryCaseUse.updateCategory(id, categoryMapperPersistence.fromPersistenceToDomain(categoryPersistence))));
+    }
+
+    //Delete category
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteCategory(@PathVariable(required = false) Long id){
+        return deleteCategoryCaseUse.deleteCategory(id);
     }
 }

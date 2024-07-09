@@ -1,11 +1,9 @@
 package io.honorius.api_my_store.config;
 
 import io.honorius.api_my_store.data.repository.CategoryRepository;
-import io.honorius.api_my_store.domain.caseuse.CreateCategoryCaseUse;
-import io.honorius.api_my_store.domain.caseuse.GetAllCategoryCaseUse;
-import io.honorius.api_my_store.domain.caseuse.GetCategoryByIdCaseUse;
-import io.honorius.api_my_store.domain.caseuse.UpdateCategoryCaseUse;
+import io.honorius.api_my_store.domain.caseuse.*;
 import io.honorius.api_my_store.domain.mappers.CategoryMapperDomain;
+import io.honorius.api_my_store.utils.Validator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,17 +15,22 @@ public class BeansConfig {
     }
 
     @Bean
-    public GetCategoryByIdCaseUse getCategoryByIdCaseUse(CategoryRepository categoryRepository) {
-        return new GetCategoryByIdCaseUse(categoryRepository);
+    public GetCategoryByIdCaseUse getCategoryByIdCaseUse(CategoryRepository categoryRepository, Validator validator) {
+        return new GetCategoryByIdCaseUse(categoryRepository, validator);
     }
 
     @Bean
-    public CreateCategoryCaseUse createCategoryCaseUse(CategoryRepository categoryRepository, CategoryMapperDomain categoryMapper) {
-        return new CreateCategoryCaseUse(categoryRepository, categoryMapper);
+    public CreateCategoryCaseUse createCategoryCaseUse(CategoryRepository categoryRepository, CategoryMapperDomain categoryMapper, Validator validator) {
+        return new CreateCategoryCaseUse(categoryRepository, categoryMapper, validator);
     }
 
     @Bean
     public UpdateCategoryCaseUse updateCategoryCaseUse(CategoryRepository categoryRepository, CategoryMapperDomain categoryMapper) {
         return new UpdateCategoryCaseUse(categoryRepository, categoryMapper);
+    }
+
+    @Bean
+    public DeleteCategoryCaseUse deleteCategoryCaseUse(CategoryRepository categoryRepository, Validator validator) {
+        return new DeleteCategoryCaseUse(categoryRepository, validator);
     }
 }
